@@ -1,0 +1,35 @@
+MaterialDef Point Sprite {
+
+    MaterialParameters {
+        Texture2D m_Texture
+    }
+
+    Technique {
+
+        VertexShader GLSL100:   Common/MatDefs/Misc/Particle.vert
+        FragmentShader GLSL100: Common/MatDefs/Misc/Particle.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+
+        RenderState {
+            Blend AlphaAdditive
+            DepthWrite Off
+            AlphaTestFalloff 0.01
+        }
+
+        Defines {
+            USE_TEXTURE : m_Texture
+        }
+    }
+
+    Technique FixedFunc {
+        RenderState {
+            Blend AlphaAdditive
+            DepthWrite Off
+            AlphaTestFalloff 0.01
+        }
+    }
+
+}

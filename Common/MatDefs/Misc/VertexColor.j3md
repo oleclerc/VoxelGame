@@ -1,0 +1,12 @@
+MaterialDef Vertex Color {
+
+    Technique {
+        VertexShader GLSL100:   Common/MatDefs/Misc/VertexColor.vert
+        FragmentShader GLSL100: Common/MatDefs/Misc/VertexColor.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+    }
+
+}

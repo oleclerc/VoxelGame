@@ -1,0 +1,19 @@
+MaterialDef Solid Color {
+
+    MaterialParameters {
+        Vector4 m_Color
+    }
+
+    Technique {
+        VertexShader GLSL100:   Common/MatDefs/Misc/SolidColor.vert
+        FragmentShader GLSL100: Common/MatDefs/Misc/SolidColor.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+    }
+
+    Technique FixedFunc {
+    }
+
+}
