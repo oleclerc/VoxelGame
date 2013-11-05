@@ -1,3 +1,4 @@
+package mygame;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -396,9 +397,42 @@ public class VoxelData extends Mesh {
 		{
 			indexes[i] = i;
 		}
+
+        int[][] faces = new int[nbVertices/3][3];
+        int ix = 0;
+        for (int i = 0; i < nbVertices/3; i++){
+            faces[i][0] = indexes[ix++];
+            faces[i][1] = indexes[ix++];
+            faces[i][2] = indexes[ix++];
+        }
+                        
+        Vector3f[] normals = new Vector3f[nbVertices];
+        for(int i=0; i < nbVertices; i++){
+            normals[i] = new Vector3f(0,0,0);
+        }
+        
+        for(int i=0; i < nbVertices/3; i++){
+            int ia = faces[i][0];
+            int ib = faces[i][1];
+            int ic = faces[i][2];
+            
+            Vector3f e1 = vertArray[ic].subtract(vertArray[ia]);
+            Vector3f e2 = vertArray[ib].subtract(vertArray[ia]);
+            Vector3f no = e1.cross(e2);
+            
+            normals[ia].addLocal(no);
+            normals[ib].addLocal(no);
+            normals[ic].addLocal(no);
+        }
+        
+        for(int i=0; i < nbVertices; i++){
+            normals[i].normalizeLocal();
+        }
+		
 		setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(vertArray));
 		//setBuffer(VertexBuffer.Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
-		setBuffer(VertexBuffer.Type.Index,    3, BufferUtils.createIntBuffer(indexes));
+		setBuffer(VertexBuffer.Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
+		setBuffer(VertexBuffer.Type.Index, 3, BufferUtils.createIntBuffer(indexes));
 		updateBound();
 	}
 
